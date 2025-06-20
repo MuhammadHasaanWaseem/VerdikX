@@ -1,11 +1,17 @@
+import { useSignup } from '@/app/context/SignupContext';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { SlideInRight } from 'react-native-reanimated';
 
 export default () => {
-  const [id, setid] = useState('');
-  
+  const { signupData, setSignupData } = useSignup();
+  const [id, setId] = useState(signupData.game_uid);
+
+  const handleContinue = () => {
+    setSignupData(prev => ({ ...prev, game_uid: id }));
+    router.push('/(auth)/UserLevel');
+  };
 
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={styles.container}>
@@ -24,10 +30,10 @@ export default () => {
             autoCapitalize="none"
             autoCorrect={false}
             value={id}
-            onChangeText={setid}
+            onChangeText={setId}
             accessibilityLabel="Username input"
           />
-          <TouchableOpacity onPress={()=>router.push('/(auth)/UserLevel')} style={
+          <TouchableOpacity onPress={handleContinue} style={
           {
             backgroundColor:'#3bff31',
             paddingVertical:10,

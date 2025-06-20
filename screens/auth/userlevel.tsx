@@ -1,11 +1,51 @@
+import { useSignup } from '@/app/context/SignupContext';
+import { supabase } from '@/lib/supabase';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { SlideInRight } from 'react-native-reanimated';
 
 export default () => {
-  const [Playstyle, setPlaystyle] = useState('');
-    const [level, setlevel] = useState('');
+  const { signupData, setSignupData } = useSignup();
+  const [playstyle, setPlaystyle] = useState(signupData.playstyle);
+  const [level, setLevel] = useState(signupData.user_level ? signupData.user_level.toString() : '');
+
+  const handleComplete = async () => {
+    if (!playstyle || !level) {
+      Alert.alert('Error', 'Please fill in all fields');
+      return;
+    }
+
+    setSignupData(prev => ({ ...prev, playstyle, user_level: parseInt(level, 10) }));
+
+    // Insert user data into user_records table
+    const user = supabase.auth.getUser();
+    const userId = (await user).data.user?.id;
+
+    if (!userId) {
+      Alert.alert('Error', 'User not authenticated');
+      return;
+    }
+
+    const { error } = await supabase.from('user_records').insert([{
+      user_id: userId,
+      email: signupData.email,
+      password: signupData.password,
+      username: signupData.username,
+      game_uid: signupData.game_uid,
+      user_level: parseInt(level, 10),
+      playstyle: playstyle,
+      avatar: signupData.avatar || null,
+    }]);
+
+    if (error) {
+      Alert.alert('Error', error.message);
+      return;
+    }
+
+    router.push('/(tabs)');
+  };
+
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={styles.container}>
       <View style={styles.innerContainer}>
@@ -22,23 +62,23 @@ export default () => {
             keyboardType="default"
             autoCapitalize="none"
             autoCorrect={false}
-            value={Playstyle}
+            value={playstyle}
             onChangeText={setPlaystyle}
-            accessibilityLabel="Username input"
+            accessibilityLabel="Playstyle input"
           />
           <Text style={styles.label}>Enter your ID level</Text>
           <TextInput
-            placeholder="Enter Your Playstyle"
+            placeholder="Enter Your Level"
             placeholderTextColor={'white'}
             style={styles.textInput}
-            keyboardType="default"
+            keyboardType="numeric"
             autoCapitalize="none"
             autoCorrect={false}
             value={level}
-            onChangeText={setlevel}
-            accessibilityLabel="Username input"
+            onChangeText={setLevel}
+            accessibilityLabel="Level input"
           />
-          <TouchableOpacity onPress={()=>router.push('/(tabs)')} style={
+          <TouchableOpacity onPress={handleComplete} style={
           {
             backgroundColor:'#3bff31',
             paddingVertical:10,

@@ -1,11 +1,17 @@
+import { useSignup } from '@/app/context/SignupContext';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Animated, { SlideInRight } from 'react-native-reanimated';
 
 export default () => {
-  const [username, setUsername] = useState('');
-  
+  const { signupData, setSignupData } = useSignup();
+  const [username, setUsername] = useState(signupData.username);
+
+  const handleContinue = () => {
+    setSignupData(prev => ({ ...prev, username }));
+    router.push('/(auth)/UserId');
+  };
 
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={styles.container}>
@@ -27,7 +33,7 @@ export default () => {
             onChangeText={setUsername}
             accessibilityLabel="Username input"
           />
-          <TouchableOpacity onPress={()=>router.push('/(auth)/UserId')} style={
+          <TouchableOpacity onPress={handleContinue} style={
           {
             backgroundColor:'#3bff31',
             paddingVertical:10,

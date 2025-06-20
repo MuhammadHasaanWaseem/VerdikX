@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { StatusBar } from 'react-native';
 import { AuthProvider } from './context/AuthProvider';
+import { SignupProvider } from './context/SignupContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -19,6 +20,7 @@ export default function RootLayout() {
   return (
     //  <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <AuthProvider>
+      <SignupProvider>
       <StatusBar hidden={true}/>
       <Stack initialRouteName="index">
         <Stack.Screen name="(auth)" options={{ headerShown: false,animation:'slide_from_right' }} />
@@ -26,7 +28,7 @@ export default function RootLayout() {
         <Stack.Screen name='index' options={{headerShown:false}}/>
         <Stack.Screen name="+not-found" />
         {/* <StatusBar hidden={true} /> */}
-      </Stack>
+      </Stack></SignupProvider>
       </AuthProvider>
        
     //  </ThemeProvider>

@@ -1,4 +1,5 @@
 import { useAuth } from '@/app/context/AuthProvider';
+import { useSignup } from '@/app/context/SignupContext';
 import Toast from '@/components/ui/Toast';
 import { supabase } from '@/lib/supabase';
 import { router } from 'expo-router';
@@ -16,6 +17,7 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
+  const { signupData, setSignupData } = useSignup();
 
 async function verifyOtp() {
     if (!otp || otp.length !== 6) {
@@ -34,6 +36,7 @@ async function verifyOtp() {
     if (error) {
       Alert.alert('Error', error.message);
     } else {
+      setSignupData(prev => ({ ...prev, email, password }));
       setIsOtpModalVisible(false); // Close modal
       router.push('/(auth)/Username'); // Navigate to next page
     }
@@ -43,26 +46,30 @@ async function verifyOtp() {
 
 
   const signUpWithEmail = async () => {
-       if (password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setToastMessage('Passwords do not match');
       return;
     }
     if(password.length ==0 || email.length==0){
       setToastMessage('Please fill in both fields');
+      return;
     }
-    
-
     else if (password.length < 8) {
       setToastMessage('Password should be at least 8 characters long');
       return;
     }
     setLoading(true);
 
-      setToastMessage('Please check your inbox for email verification!');
-            setIsOtpModalVisible(true); // Close modal
+    const { error } = await signUp(email, password);
+    if (error) {
+      setToastMessage(error.message);
+      setLoading(false);
+      return;
+    }
 
-      
-    
+    setToastMessage('Please check your inbox for email verification!');
+    setIsOtpModalVisible(true);
+    setLoading(false);
   };
 
   return (

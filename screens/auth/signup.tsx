@@ -57,30 +57,12 @@ async function verifyOtp() {
       return;
     }
     setLoading(true);
-    const { error, data } = await signUp(email, password);
-    if (!error && data?.user) {
-      // Insert initial user record in user_records table
-      const { user } = data;
-      const { error: insertError } = await supabase
-        .from('user_records')
-        .insert({
-          user_id: user.id,
-          email: email,
-          password: password,
-        });
-      if (insertError) {
-        setToastMessage('Error saving user data: ' + insertError.message);
-      }
-    }
-    setLoading(false);
-    if (error) {
-      setToastMessage(error.message);
-    } else {
+
       setToastMessage('Please check your inbox for email verification!');
             setIsOtpModalVisible(true); // Close modal
 
       
-    }
+    
   };
 
   return (

@@ -1,20 +1,7 @@
-import React from 'react'
-import { Pressable, Text, View } from 'react-native'
-import { useAuth } from '../context/AuthProvider'
+import Homescreen from "@/screens/tabs/Prodile"
 
-const index = () => {
-  const {signOut}=useAuth()
+export default ()=>{
   return (
-    <View style={{
-        backgroundColor:'black',flex:1,justifyContent:'center',alignItems:'center'
-      }}>
-     <Pressable onPress={signOut}>
-       <Text style={{
-        color:'white'
-      }} >Logout</Text>
-     </Pressable>
-    </View>
+    <Homescreen/>
   )
 }
-
-export default index

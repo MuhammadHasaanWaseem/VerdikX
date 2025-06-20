@@ -22,7 +22,7 @@ export default function RootLayout() {
     <AuthProvider>
       <SignupProvider>
       <StatusBar hidden={true}/>
-      <Stack initialRouteName="index">
+      <Stack initialRouteName="(tabs)">
         <Stack.Screen name="(auth)" options={{ headerShown: false,animation:'slide_from_right' }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false,animation:'slide_from_left' }} />
         <Stack.Screen name='index' options={{headerShown:false}}/>

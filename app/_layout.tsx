@@ -45,6 +45,7 @@ export default function RootLayout() {
           <Stack.Screen name="SeperateUser" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name="Editprofile" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name='index' options={{ headerShown: false }} />
+          <Stack.Screen name='Avatar' options={{ headerShown: false,animation:'slide_from_right' }} />
           <Stack.Screen name="+not-found" />
           {/* <StatusBar hidden={true} /> */}
         </Stack></SignupProvider>

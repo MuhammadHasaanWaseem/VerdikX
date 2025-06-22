@@ -6,6 +6,7 @@ import React from "react";
 import {
   Dimensions,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -28,6 +29,7 @@ const {signOut} =useAuth();
       colors={["black", "black", "#3bff31"]}
       style={styles.container}
     >
+      <StatusBar hidden={true}/>
       <SafeAreaView style={{ flex: 1, paddingHorizontal: 20 }}>
         <Animated.Text entering={FadeInUp.duration(600)} style={styles.title}>
            Menu
@@ -62,7 +64,15 @@ const {signOut} =useAuth();
             <Text style={styles.buttonText}>User Terms</Text>
           </TouchableOpacity>
         </Animated.View>
-
+  <Animated.View entering={FadeInDown.delay(300)} style={styles.menuItem}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => router.push('/Avatar')}
+          >
+            <MaterialIcons name="gavel" size={24} color="#fff" />
+            <Text style={styles.buttonText}>Top Games To Play</Text>
+          </TouchableOpacity>
+        </Animated.View>
         <View style={{ flex: 1 }} />
 
         <Animated.View entering={FadeInDown.delay(600)} style={styles.logoutWrapper}>

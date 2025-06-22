@@ -1,7 +1,7 @@
-import Search from "./search"
+import Tour from "@/screens/tabs/tour"
 
 export default ()=>{
   return (
-    <Search/>
+    <Tour/>
   )
 }

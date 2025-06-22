@@ -137,7 +137,7 @@ export default function EditProfile() {
       <Text style={styles.label}>Avatar URL</Text>
       <TextInput
         style={styles.input}
-        value={profile.avatar}
+        value={profile.avatar} 
         onChangeText={text => setProfile({ ...profile, avatar: text })}
       />
 

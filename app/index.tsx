@@ -4,7 +4,7 @@ import { Image, StatusBar, TouchableOpacity } from "react-native";
 import Animated, { SlideInLeft, SlideInRight } from "react-native-reanimated";
 
 export default () => {
-  
+ 
 
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={{ flex: 1, backgroundColor: 'black' }}>

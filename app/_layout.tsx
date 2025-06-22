@@ -1,13 +1,27 @@
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { supabase } from '@/lib/supabase';
+import { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { AuthProvider } from './context/AuthProvider';
 import { SignupProvider } from './context/SignupContext';
 
 export default function RootLayout() {
+   useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session) {
+        //  User is already logged in, go to main app
+        router.replace('/(tabs)');
+      }
+    };
+
+    checkSession();
+  }, []);
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -22,7 +36,7 @@ export default function RootLayout() {
     <AuthProvider>
       <SignupProvider>
         <StatusBar hidden={true} />
-        <Stack initialRouteName='(tabs)' >
+        <Stack initialRouteName='index' >
           <Stack.Screen name="(auth)" options={{ headerShown: false, animation: 'slide_from_right' }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name="(drawer)" options={{ headerShown: false, animation: 'slide_from_right' }} />

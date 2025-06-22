@@ -36,19 +36,12 @@ const Avatar = () => {
     <ScrollView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <Animated.View style={{ opacity: fadeAnim }}>
-        <Text style={styles.title}>🎮 Top 100 Popular Games</Text>
+        <Text style={styles.title}> Top Trending and Popular Games</Text>
         {games.map((game, index) => (
           <View key={index} style={styles.card}>
             <Text style={styles.gameText}>{index + 1}. {game}</Text>
-            
           </View>
         ))}
-        <Text>
-              
-            </Text>
-             <Text>
-              
-            </Text>
       </Animated.View>
     </ScrollView>
   );
@@ -66,7 +59,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#3bff31',
+    color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -74,12 +67,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#3bff31',
     padding: 15,
     borderRadius: 14,
-    marginBottom: 20,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    
   },
   gameText: {
     color: 'black',

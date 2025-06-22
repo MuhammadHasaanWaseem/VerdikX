@@ -21,16 +21,21 @@ export default function RootLayout() {
     //  <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <AuthProvider>
       <SignupProvider>
-      <StatusBar hidden={true}/>
-      <Stack initialRouteName="(tabs)">
-        <Stack.Screen name="(auth)" options={{ headerShown: false,animation:'slide_from_right' }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false,animation:'slide_from_left' }} />
-        <Stack.Screen name='index' options={{headerShown:false}}/>
-        <Stack.Screen name="+not-found" />
-        {/* <StatusBar hidden={true} /> */}
-      </Stack></SignupProvider>
-      </AuthProvider>
-       
+        <StatusBar hidden={true} />
+        <Stack initialRouteName='(tabs)' >
+          <Stack.Screen name="(auth)" options={{ headerShown: false, animation: 'slide_from_right' }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name="(drawer)" options={{ headerShown: false, animation: 'slide_from_right' }} />
+          <Stack.Screen name="(communication)" options={{ headerShown: false, animation: 'slide_from_right' }} />
+          <Stack.Screen name="apply" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name="SeperateUser" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name="Editprofile" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name='index' options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          {/* <StatusBar hidden={true} /> */}
+        </Stack></SignupProvider>
+    </AuthProvider>
+
     //  </ThemeProvider>
   );
 }

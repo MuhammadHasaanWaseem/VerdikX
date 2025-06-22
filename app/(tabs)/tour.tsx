@@ -1,7 +1,7 @@
-import Tournment from "@/screens/tabs/tournment"
+import Search from "./search"
 
 export default ()=>{
   return (
-    <Tournment/>
+    <Search/>
   )
 }

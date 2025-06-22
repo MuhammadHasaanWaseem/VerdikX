@@ -1,7 +1,7 @@
-import Homescreen from "@/screens/tabs/Prodile"
+import HomeScreen from "@/screens/tabs/homescreen"
 
 export default ()=>{
   return (
-    <Homescreen/>
+    <HomeScreen/>
   )
 }

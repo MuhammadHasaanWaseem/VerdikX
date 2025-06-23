@@ -3,15 +3,15 @@ import { supabase } from '@/lib/supabase';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import {
-    Alert,
-    FlatList,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 export default function DirectMessage() {
@@ -120,6 +120,16 @@ export default function DirectMessage() {
               }}
             >
               {item.message}
+            </Text>
+            <Text
+              style={{
+                color: item.sender_id === user?.id ? '#333' : '#ccc',
+                fontSize: 10,
+                marginTop: 4,
+                alignSelf: 'flex-end',
+              }}
+            >
+              {item.sent_at ? new Date(item.sent_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ''}
             </Text>
             {item.sender_id === user?.id && (
               <View style={styles.controls}>

@@ -27,7 +27,7 @@ export default () => {
 
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={styles.container}>
-      <StatusBar hidden={true} />
+      <StatusBar hidden={false} />
       <Animated.View entering={SlideInUp.duration(500)} style={styles.innerContainer}>
         <Image
           source={require('../../assets/Appicons/VerdikX.png')}
@@ -99,7 +99,9 @@ export default () => {
               Sign up
             </Text>
           </Pressable>
+         
         </View>
+      
       </Animated.View>
       {toastMessage && <Toast message={toastMessage} onHide={() => setToastMessage(null)} />}
     </Animated.View>

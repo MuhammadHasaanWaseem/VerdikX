@@ -11,6 +11,7 @@ interface UserProfile {
   avatar?: string | null;
   created_at?: string;
   User_about: string;
+  tournaments_participated:number
 }
 export type { UserProfile };
 

@@ -1,27 +1,25 @@
 import { useFonts } from 'expo-font';
-import { router, Stack } from 'expo-router';
+import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { supabase } from '@/lib/supabase';
-import { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { AuthProvider } from './context/AuthProvider';
 import { SignupProvider } from './context/SignupContext';
 
 export default function RootLayout() {
-   useEffect(() => {
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+  //  useEffect(() => {
+  //   const checkSession = async () => {
+  //     const { data: { session } } = await supabase.auth.getSession();
 
-      if (session) {
-        //  User is already logged in, go to main app
-        router.replace('/(tabs)');
-      }
-    };
+  //     if (session===user) {
+  //       //  User is already logged in, go to main app
+  //       router.replace('/(tabs)');
+  //     }
+  //   };
 
-    checkSession();
-  }, []);
+  //   checkSession();
+  // }, []);
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -42,6 +40,8 @@ export default function RootLayout() {
           <Stack.Screen name="(drawer)" options={{ headerShown: false, animation: 'slide_from_right' }} />
           <Stack.Screen name="(communication)" options={{ headerShown: false, animation: 'slide_from_right' }} />
           <Stack.Screen name="apply" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name="Applications" options={{ headerShown: false, animation: 'slide_from_left' }} />
+          <Stack.Screen name="CreateTour" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name="SeperateUser" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name="Editprofile" options={{ headerShown: false, animation: 'slide_from_left' }} />
           <Stack.Screen name='index' options={{ headerShown: false }} />

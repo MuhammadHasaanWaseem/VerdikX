@@ -44,3 +44,5 @@ export const useSignup = () => {
   }
   return context;
 };
+
+export default SignupProvider;

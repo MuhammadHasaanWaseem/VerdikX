@@ -25,6 +25,7 @@ export default function SeperateUser() {
   const [loading, setLoading] = useState(true);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isFriend, setIsFriend] = useState<boolean>(false);
+  const [requestSent, setRequestSent] = useState<boolean>(false);
 
   const fetchUserData = async () => {
     const { data, error } = await supabase
@@ -48,6 +49,17 @@ export default function SeperateUser() {
     setIsFriend(!!data);
   };
 
+  const checkFriendRequestStatus = async () => {
+    const { data } = await supabase
+      .from('friend_requests')
+      .select('*')
+      .eq('sender_id', user?.id)
+      .eq('receiver_id', user_id)
+      .single();
+
+    setRequestSent(!!data);
+  };
+
   const sendFriendRequest = async () => {
     if (!user?.id || !profile?.user_id) return;
 
@@ -61,7 +73,26 @@ export default function SeperateUser() {
       return;
     }
 
+    setRequestSent(true);
     setToastMessage('Friend request sent!');
+  };
+
+  const cancelFriendRequest = async () => {
+    if (!user?.id || !profile?.user_id) return;
+
+    const { error } = await supabase
+      .from('friend_requests')
+      .delete()
+      .eq('sender_id', user.id)
+      .eq('receiver_id', profile.user_id);
+
+    if (error) {
+      console.error('Failed to cancel friend request:', error.message);
+      return;
+    }
+
+    setRequestSent(false);
+    setToastMessage('Friend request cancelled.');
   };
 
   const unfriendUser = async () => {
@@ -78,6 +109,7 @@ export default function SeperateUser() {
     if (user_id) {
       fetchUserData();
       checkFriendStatus();
+      checkFriendRequestStatus();
     }
   }, [user_id]);
 
@@ -103,6 +135,12 @@ export default function SeperateUser() {
         <View style={{ width: 24 }} />
       </View>
 
+      {toastMessage && (
+        <View style={styles.toast}>
+          <Text style={styles.toastText}>{toastMessage}</Text>
+        </View>
+      )}
+
       <View style={styles.profileCard}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <Image
@@ -126,6 +164,11 @@ export default function SeperateUser() {
               <TouchableOpacity style={styles.button} onPress={unfriendUser}>
                 <MaterialIcons name="person-remove" size={20} color="black" />
                 <Text style={styles.buttonText}>Unfriend</Text>
+              </TouchableOpacity>
+            ) : requestSent ? (
+              <TouchableOpacity style={styles.button} onPress={cancelFriendRequest}>
+                <MaterialIcons name="cancel" size={20} color="black" />
+                <Text style={styles.buttonText}>Cancel Request</Text>
               </TouchableOpacity>
             ) : (
               <TouchableOpacity style={styles.button} onPress={sendFriendRequest}>
@@ -342,5 +385,21 @@ const styles = StyleSheet.create({
     color: '#aaa',
     fontSize: 14,
     fontStyle: 'italic',
+  },
+  toast: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: '#3bff31',
+    padding: 10,
+    borderRadius: 8,
+    zIndex: 1000,
+    alignItems: 'center',
+  },
+  toastText: {
+    color: 'black',
+    fontWeight: '600',
+    fontSize: 16,
   },
 });

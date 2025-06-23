@@ -4,7 +4,7 @@
     "slug": "Verdikx",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/Appicons/VerdikX.png",
+    "icon": "./assets/Appicons/VerdikX.png",
     "scheme": "verdikx",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,22 +13,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/Appicons/VerdikX.png",
+        "foregroundImage": "./assets/Appicons/VerdikX.png",
         "backgroundColor": "#000000"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.hasaan.Verdikx"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/Appicons/VerdikX.png"
+      "favicon": "./assets/Appicons/VerdikX.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/Appicons/VerdikX.png",
+        "image": "./assets/Appicons/VerdikX.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000"
@@ -37,6 +38,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "433adc5e-2d72-480d-b808-71f3f40a6f13"
+      }
     }
   }
 }

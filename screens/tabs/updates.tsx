@@ -105,7 +105,7 @@ const MyApplications = () => {
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           contentContainerStyle={{ paddingBottom: 40 }}
-        />
+        /> 
       )}
 
       <Modal

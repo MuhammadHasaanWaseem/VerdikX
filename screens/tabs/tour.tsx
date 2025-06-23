@@ -4,13 +4,13 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { Gamepad2, Search, UserCircle, X } from 'lucide-react-native';
 import React, { useCallback, useState } from 'react';
 import {
-    FlatList,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 
 const SearchTournament = () => {
@@ -87,7 +87,7 @@ const SearchTournament = () => {
             <X color="grey" size={20} />
           </TouchableOpacity>
         )}
-      </View>
+      </View> 
 
       {filtered.length === 0 ? (
         <Text style={styles.noResults}>No tournaments found.</Text>

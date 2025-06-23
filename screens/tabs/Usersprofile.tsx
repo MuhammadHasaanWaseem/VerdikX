@@ -215,7 +215,7 @@ export default function SeperateUser() {
           <Text style={styles.joinedDate}>
             {profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : 'Unknown'}
           </Text>
-        </View>
+        </View> 
       </View>
     </ScrollView>
   );

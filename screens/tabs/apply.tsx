@@ -80,7 +80,7 @@ export default function ApplyScreen() {
       </View>
     );
   }
-
+ 
   return (
     <View style={styles.container}>
       <StatusBar hidden />

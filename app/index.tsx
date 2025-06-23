@@ -1,10 +1,19 @@
 import { router } from "expo-router";
 import { ArrowRight } from 'lucide-react-native';
+import { useEffect } from "react";
 import { Image, StatusBar, TouchableOpacity } from "react-native";
 import Animated, { SlideInLeft, SlideInRight } from "react-native-reanimated";
+import { useAuth } from "./context/AuthProvider";
+import { useSignup } from "./context/SignupContext";
 
 export default () => {
- 
+  const {user}=useAuth()
+  const {signupCompleted}=useSignup()
+useEffect(() => {
+  if (user && !signupCompleted) {
+    router.push('/(tabs)');
+  }
+}, [user,signupCompleted]);
 
   return (
     <Animated.View entering={SlideInRight.duration(500).damping(2)} style={{ flex: 1, backgroundColor: 'black' }}>

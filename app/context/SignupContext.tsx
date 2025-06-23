@@ -13,6 +13,9 @@ interface SignupData {
 interface SignupContextType {
   signupData: SignupData;
   setSignupData: React.Dispatch<React.SetStateAction<SignupData>>;
+  signupCompleted: boolean;
+  setSignupCompleted: React.Dispatch<React.SetStateAction<boolean>>;
+  
 }
 
 const defaultSignupData: SignupData = {
@@ -29,9 +32,10 @@ const SignupContext = createContext<SignupContextType | undefined>(undefined);
 
 export const SignupProvider = ({ children }: { children: ReactNode }) => {
   const [signupData, setSignupData] = useState<SignupData>(defaultSignupData);
+  const [signupCompleted, setSignupCompleted] = useState<boolean>(false);
 
   return (
-    <SignupContext.Provider value={{ signupData, setSignupData }}>
+    <SignupContext.Provider value={{ signupData, setSignupData ,signupCompleted,setSignupCompleted}}>
       {children}
     </SignupContext.Provider>
   );

@@ -19,6 +19,7 @@ const SearchTournament = () => {
   const [tournaments, setTournaments] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const [searchText, setSearchText] = useState('');
+  const [appliedTournaments, setAppliedTournaments] = useState<string[]>([]);
 
   const fetchTournaments = async () => {
     const { data, error } = await supabase
@@ -38,6 +39,30 @@ const SearchTournament = () => {
       console.error(error.message);
     }
   };
+
+  const fetchAppliedTournaments = async () => {
+    if (!user?.id) return;
+    const { data, error } = await supabase
+      .from('tournament_applications')
+      .select('tournament_id')
+      .eq('applicant_id', user.id);
+
+    if (!error && data) {
+      const appliedIds = data.map((item) => item.tournament_id);
+      setAppliedTournaments(appliedIds);
+    } else {
+      console.error('Error fetching applied tournaments:', error?.message);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      if (user?.id) {
+        fetchTournaments();
+        fetchAppliedTournaments();
+      }
+    }, [user])
+  );
 
   const handleSearch = (text: string) => {
     setSearchText(text);
@@ -101,12 +126,18 @@ const SearchTournament = () => {
               <Text style={styles.info}><Gamepad2 size={14} color="#3bff31" /> Game: {item.game}</Text>
               <Text style={styles.info}>Match: {item.match_type}</Text>
               <Text style={styles.info}><UserCircle size={14} color="#3bff31" /> Organizer: {item.organizer}</Text>
-              <TouchableOpacity
-                style={styles.applyButton}
-                onPress={() => handleApply(item.id)}
-              >
-                <Text style={styles.applyText}>Apply</Text>
-              </TouchableOpacity>
+          {appliedTournaments.includes(item.id) ? (
+            <View style={[styles.applyButton, { backgroundColor: '#888' }]}>
+              <Text style={[styles.applyText, { color: 'white' }]}>Already Applied</Text>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => handleApply(item.id)}
+            >
+              <Text style={styles.applyText}>Apply</Text>
+            </TouchableOpacity>
+          )}
             </View>
           )}
           contentContainerStyle={{ paddingBottom: 50 }}

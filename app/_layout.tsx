@@ -3,8 +3,7 @@ import { Stack } from 'expo-router';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { StatusBar } from 'react-native';
-import { AuthProvider, useAuth } from './context/AuthProvider';
+import { AuthProvider } from './context/AuthProvider';
 import { SignupProvider } from './context/SignupContext';
 
 export default function RootLayout() {
@@ -21,24 +20,7 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <SignupProvider>
-        <StatusBar hidden={true} />
-        <AuthConsumer />
-      </SignupProvider>
-    </AuthProvider>
-  );
-}
-
-function AuthConsumer() {
-  const { user, loading } = useAuth();
-
-  if (loading) {
-    return null; // or a loading indicator
-  }
-
-  const initialRouteName = user ? '(tabs)' : 'index';
-
-  return (
-    <Stack initialRouteName={initialRouteName}>
+    <Stack initialRouteName={'index'}>
       <Stack.Screen name="(auth)" options={{ headerShown: false, animation: 'slide_from_right' }} />
       <Stack.Screen name="(tabs)" options={{ headerShown: false, animation: 'slide_from_left' }} />
       <Stack.Screen name="(drawer)" options={{ headerShown: false, animation: 'slide_from_right' }} />
@@ -51,6 +33,9 @@ function AuthConsumer() {
       <Stack.Screen name='index' options={{ headerShown: false }} />
       <Stack.Screen name='Avatar' options={{ headerShown: false, animation: 'slide_from_right' }} />
       <Stack.Screen name="+not-found" />
-    </Stack>
+          </Stack>
+
+      </SignupProvider>
+    </AuthProvider>
   );
 }

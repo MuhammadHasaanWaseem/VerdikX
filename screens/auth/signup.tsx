@@ -14,12 +14,13 @@ export default () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const { signUp } = useAuth();
+  const {setSignupCompleted} =useSignup ()
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const [isOtpModalVisible, setIsOtpModalVisible] = useState(false);
   const { signupData, setSignupData } = useSignup();
 
-async function verifyOtp() {
+  async function verifyOtp() {
     if (!otp || otp.length !== 6) {
       Alert.alert('Error', 'Please enter a valid 6-digit OTP');
       return;
@@ -36,8 +37,21 @@ async function verifyOtp() {
     if (error) {
       Alert.alert('Error', error.message);
     } else {
+      // Automatically sign in the user after OTP verification
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (signInError) {
+        Alert.alert('Error', signInError.message);
+        setLoading(false);
+        return;
+      }
+
       setSignupData(prev => ({ ...prev, email, password }));
       setIsOtpModalVisible(false); // Close modal
+      setSignupCompleted(true)
       router.push('/(auth)/Username'); // Navigate to next page
     }
 
